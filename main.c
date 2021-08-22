@@ -105,10 +105,10 @@ void jsimd_quantize_opt(JCOEFPTR coef_block, DCTELEM *divisors,
     /* Multiply DCT coefficients by quantization reciprocals. */
     // this doubles, saturates and takes the high 16-bits of the result
     // from a signed 16x16 multiply
-    row0 = vqdmulhq_s16(abs_row0, recip0);
-    row1 = vqdmulhq_s16(abs_row1, recip1);
-    row2 = vqdmulhq_s16(abs_row2, recip2);
-    row3 = vqdmulhq_s16(abs_row3, recip3);
+    row0 = vqdmulhq_s16(vreinterpretq_s16_u16(abs_row0), vreinterpretq_s16_u16(recip0));
+    row1 = vqdmulhq_s16(vreinterpretq_s16_u16(abs_row1), vreinterpretq_s16_u16(recip1));
+    row2 = vqdmulhq_s16(vreinterpretq_s16_u16(abs_row2), vreinterpretq_s16_u16(recip2));
+    row3 = vqdmulhq_s16(vreinterpretq_s16_u16(abs_row3), vreinterpretq_s16_u16(recip3));
 
     /* Since VSHR only supports an immediate as its second argument, negate the
      * shift value and shift left.
